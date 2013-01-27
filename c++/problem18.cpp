@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#if 0
+#if 1
 vector<int> triangle = {
 	0,
 	75,
@@ -22,7 +22,7 @@ vector<int> triangle = {
 	63, 66,  4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31,
 	 4, 62, 98, 27, 23,  9, 70, 98, 73, 93, 38, 53, 60,  4, 23,
 };
-#endif
+#else
 vector<int> triangle = {
 	0,
 	3,
@@ -30,18 +30,18 @@ vector<int> triangle = {
 	2, 4, 6,
 	8, 5, 9, 3,
 };
+#endif
 
 int move(int pos, int level)
 {
-	printf("%d: %d\n", level, triangle[pos]);
-
 	// no where to move
-	if(pos + level > triangle.size())
+	if(pos + level >= triangle.size())
 		return triangle[pos];
 
-	if(triangle[pos + level] < triangle[pos + level + 1])
-		return triangle[pos] + move(pos + level + 1, level + 1);
-	return triangle[pos] + move(pos + level, level + 1);
+	int right = triangle[pos] + move(pos + level + 1, level + 1);
+	int left = triangle[pos] + move(pos + level, level + 1);
+
+	return (left > right) ? left : right;
 }
 
 int main()
